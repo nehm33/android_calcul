@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CalculMental</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jouer">Jouer</string>
+    <string name="options">Options</string>
+    <string name="scores">Scores</string>
+</resources>
