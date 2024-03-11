@@ -5,4 +5,12 @@
     <string name="jouer">Jouer</string>
     <string name="options">Options</string>
     <string name="scores">Scores</string>
+    <string name="niveau">Niveau</string>
+    <string name="temps">Temps</string>
+    <string name="mode">Mode de jeu</string>
+    <string name="zen">Zen</string>
+    <string name="clm">CLM</string>
+    <string name="infini">Infini</string>
+    <string name="arcade">Arcade</string>
+    <string name="valider">Valider</string>
 </resources>
