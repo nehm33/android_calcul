@@ -4,35 +4,8 @@ package com.platydev.calculmental.data;
 public class Modele {
 	
 	private Operation currOp;
-	private int currNiveau = 1;
-	private int temps = 90;
-	private Mode mode = Mode.Zen;
 	private int score = 0;
 
-	public int getCurrNiveau() {
-		return currNiveau;
-	}
-
-	public void setCurrNiveau(int currNiveau) {
-		this.currNiveau = currNiveau;
-	}
-
-	public int getTemps() {
-		return temps;
-	}
-
-	public void setTemps(int temps) {
-		this.temps = temps;
-	}
-
-	public Mode getMode() {
-		return mode;
-	}
-
-	public void setMode(Mode mode) {
-		this.mode = mode;
-	}
-	
 	public Operation getCurrOp() {
 		return currOp;
 	}
@@ -41,7 +14,7 @@ public class Modele {
 		return score;
 	}
 
-	public void nouvelleOperation() {
+	/*public void nouvelleOperation() {
 		currOp = GenAleatoireOperation.nouvelleOperation(currNiveau);
 	}
 	
@@ -60,6 +33,6 @@ public class Modele {
 	
 	public void diminueScore(int points) {
 		score -= points;
-	}
+	}*/
 
 }
