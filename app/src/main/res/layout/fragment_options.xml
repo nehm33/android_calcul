@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_grey"
-    tools:context=".ui.OptionsFragment"
+    tools:context=".ui.options.OptionsFragment"
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
@@ -32,6 +32,7 @@
         android:id="@+id/levelTextView"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/blue"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"/>
 
@@ -54,34 +55,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:id="@+id/zenButton"
             android:text="@string/zen"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:id="@+id/clmButton"
             android:text="@string/clm"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:id="@+id/infiniButton"
             android:text="@string/infini"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:id="@+id/arcadeButton"
             android:text="@string/arcade"/>
     </RadioGroup>
 
@@ -100,6 +106,7 @@
         android:id="@+id/timeTextView"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/blue"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"/>
 
@@ -112,7 +119,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/validButton"
+        android:id="@+id/validationButton"
         android:padding="10dp"
         android:layout_marginTop="80dp"
         android:text="@string/valider"/>

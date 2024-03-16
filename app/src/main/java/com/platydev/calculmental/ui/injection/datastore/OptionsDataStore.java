@@ -36,12 +36,15 @@ public class OptionsDataStore extends DataStore {
     }
 
     public Options readOptions() {
-        Integer niveau = dataStore.data().map(prefs -> prefs.get(NIVEAU))
-                                            .blockingFirst(Options.DEFAULT.getNiveau());
-        Integer temps = dataStore.data().map(prefs -> prefs.get(TEMPS))
-                                            .blockingFirst(Options.DEFAULT.getTemps());
-        String mode = dataStore.data().map(prefs -> prefs.get(MODE))
-                                            .blockingFirst(Options.DEFAULT.getMode().getNom());
+        Integer niveau = dataStore.data()
+                .map(prefs -> prefs.get(NIVEAU) != null ? prefs.get(NIVEAU) : Options.DEFAULT.getNiveau())
+                .blockingFirst();
+        Integer temps = dataStore.data()
+                .map(prefs -> prefs.get(TEMPS) != null ? prefs.get(TEMPS) : Options.DEFAULT.getTemps())
+                .blockingFirst();
+        String mode = dataStore.data()
+                .map(prefs -> prefs.get(MODE) != null ? prefs.get(MODE) : Options.DEFAULT.getMode().getNom())
+                .blockingFirst();
         return new Options(niveau, temps, Mode.fromString(mode));
     }
 
