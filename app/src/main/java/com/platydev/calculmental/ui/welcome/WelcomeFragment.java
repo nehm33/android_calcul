@@ -1,4 +1,4 @@
-package com.platydev.calculmental.ui;
+package com.platydev.calculmental.ui.welcome;
 
 import android.os.Bundle;
 
