@@ -1,19 +1,17 @@
 package com.platydev.calculmental.ui.options;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.SeekBar;
 
 import com.platydev.calculmental.R;
 import com.platydev.calculmental.data.Mode;
@@ -23,11 +21,7 @@ import com.platydev.calculmental.ui.injection.datastore.OptionsDataStore;
 import com.platydev.calculmental.ui.injection.datastore.factory.OptionsDataStoreFactory;
 import com.platydev.calculmental.ui.welcome.WelcomeFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OptionsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class OptionsFragment extends Fragment {
 
     private FragmentOptionsBinding binding;

@@ -5,5 +5,5 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.platydev.calculmental.ui.welcome.WelcomeFragment"
+    android:name="com.platydev.calculmental.ui.game.GameFragment"
     tools:layout="@layout/fragment_welcome" />
