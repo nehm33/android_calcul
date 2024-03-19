@@ -1,4 +1,6 @@
-package com.platydev.calculmental.data;
+package com.platydev.calculmental.data.options;
+
+import com.platydev.calculmental.data.operation.Mode;
 
 public class Options {
 

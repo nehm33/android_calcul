@@ -1,4 +1,4 @@
-package com.platydev.calculmental.data;
+package com.platydev.calculmental.data.operation;
 
 public enum Operateur {
 	
