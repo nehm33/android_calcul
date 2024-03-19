@@ -26,4 +26,9 @@
     <string name="reprendre">Reprendre</string>
     <string name="recommencer">Recommencer</string>
     <string name="quitter">Quitter</string>
+    <string name="fin_de_la_partie">Fin de la partie</string>
+    <string name="bien_joue">Bien joué</string>
+    <string name="votre_score">Votre score:</string>
+    <string name="votre_temps">Votre temps:</string>
+    <string name="accueil">Accueil</string>
 </resources>

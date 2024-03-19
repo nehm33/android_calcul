@@ -12,7 +12,7 @@
         android:textColor="@color/red"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:text="Fin de la partie"/>
+        android:text="@string/fin_de_la_partie"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_marginTop="30dp"
         android:textSize="45sp"
         android:textStyle="bold"
-        android:text="Bien joué"/>
+        android:text="@string/bien_joue"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:textStyle="bold"
             android:textSize="30sp"
             android:gravity="end"
-            android:text="Votre score:" />
+            android:text="@string/votre_score" />
 
         <Space
             android:layout_width="0dp"
@@ -46,8 +46,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textSize="30sp"
-            android:text="3000"/>
+            android:id="@+id/finalScoreTextView"
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,10 +60,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:id="@+id/yourTimeTextView"
             android:textStyle="bold"
             android:textSize="30sp"
             android:gravity="end"
-            android:text="Votre temps:" />
+            android:text="@string/votre_temps" />
 
         <Space
             android:layout_width="0dp"
@@ -74,14 +75,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textSize="30sp"
-            android:text="30:00"/>
+            android:id="@+id/finalTimeTextView"
+            android:textSize="30sp" />
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:textStyle="bold"
-        android:text="Accueil" />
+        android:text="@string/accueil" />
 
 </LinearLayout>
