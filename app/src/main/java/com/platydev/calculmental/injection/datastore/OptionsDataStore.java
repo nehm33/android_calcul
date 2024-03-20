@@ -1,4 +1,4 @@
-package com.platydev.calculmental.ui.injection.datastore;
+package com.platydev.calculmental.injection.datastore;
 
 import android.content.Context;
 

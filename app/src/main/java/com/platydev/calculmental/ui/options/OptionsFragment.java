@@ -17,8 +17,8 @@ import com.platydev.calculmental.R;
 import com.platydev.calculmental.data.operation.Mode;
 import com.platydev.calculmental.data.options.Options;
 import com.platydev.calculmental.databinding.FragmentOptionsBinding;
-import com.platydev.calculmental.ui.injection.datastore.OptionsDataStore;
-import com.platydev.calculmental.ui.injection.datastore.factory.OptionsDataStoreFactory;
+import com.platydev.calculmental.injection.datastore.OptionsDataStore;
+import com.platydev.calculmental.injection.datastore.factory.OptionsDataStoreFactory;
 import com.platydev.calculmental.ui.welcome.WelcomeFragment;
 
 

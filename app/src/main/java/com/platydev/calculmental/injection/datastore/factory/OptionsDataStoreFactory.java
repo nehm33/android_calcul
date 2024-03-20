@@ -1,9 +1,9 @@
-package com.platydev.calculmental.ui.injection.datastore.factory;
+package com.platydev.calculmental.injection.datastore.factory;
 
 import android.content.Context;
 
-import com.platydev.calculmental.ui.injection.datastore.DataStore;
-import com.platydev.calculmental.ui.injection.datastore.OptionsDataStore;
+import com.platydev.calculmental.injection.datastore.OptionsDataStore;
+import com.platydev.calculmental.injection.datastore.DataStore;
 
 public class OptionsDataStoreFactory implements DataStoreFactory {
 
