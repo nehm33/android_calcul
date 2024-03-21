@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.platydev.calculmental.R;
 import com.platydev.calculmental.databinding.FragmentWelcomeBinding;
+import com.platydev.calculmental.ui.game.GameFragment;
 import com.platydev.calculmental.ui.options.OptionsFragment;
 
 /**
@@ -49,6 +50,16 @@ public class WelcomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                GameFragment gameFragment = GameFragment.newInstance();
+                fragmentTransaction.replace(R.id.container, gameFragment);
+                fragmentTransaction.commit();
+            }
+        });
         binding.optionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
