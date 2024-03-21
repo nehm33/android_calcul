@@ -77,7 +77,13 @@ public class OptionsFragment extends Fragment {
 
             }
         });
+
         selectRadioButton(options.getMode()).setChecked(true);
+
+        binding.zenButton.setOnClickListener(new TimeModeClickListener(false));
+        binding.clmButton.setOnClickListener(new TimeModeClickListener(true));
+        binding.infiniButton.setOnClickListener(new TimeModeClickListener(false));
+        binding.arcadeButton.setOnClickListener(new TimeModeClickListener(true));
 
         binding.timeSeekBar.setMin(Options.TEMPS_MIN/Options.TEMPS_PAS);
         binding.timeSeekBar.setMax(Options.TEMPS_MAX/Options.TEMPS_PAS);
@@ -120,10 +126,12 @@ public class OptionsFragment extends Fragment {
             case CLM:
                 return binding.clmButton;
             case Infini:
+                setTimeSeekBarEnabled(false);
                 return binding.infiniButton;
             case Arcade:
                 return binding.arcadeButton;
             default:
+                setTimeSeekBarEnabled(false);
                 return binding.zenButton;
         }
     }
@@ -133,5 +141,24 @@ public class OptionsFragment extends Fragment {
         else if (binding.clmButton.isChecked()) return Mode.CLM;
         else if (binding.infiniButton.isChecked()) return Mode.Infini;
         else return Mode.Arcade;
+    }
+
+    private void setTimeSeekBarEnabled(boolean enabled) {
+        binding.timeSeekBar.setEnabled(enabled);
+        binding.timeTextView.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private class TimeModeClickListener implements View.OnClickListener {
+
+        private final boolean isTimeMode;
+
+        public TimeModeClickListener(boolean isTimeMode) {
+            this.isTimeMode = isTimeMode;
+        }
+
+        @Override
+        public void onClick(View v) {
+            setTimeSeekBarEnabled(isTimeMode);
+        }
     }
 }
