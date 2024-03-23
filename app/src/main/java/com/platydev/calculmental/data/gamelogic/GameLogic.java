@@ -13,14 +13,17 @@ public abstract class GameLogic {
 
     public EquationCheckResult checkResult(Operation operation, int resultat) {
         currentOperation = operation;
-        if (operation.verifResultat(resultat)) {
-            return goodAnswer();
+        boolean validAnswer = operation.verifResultat(resultat);
+        GameLogicUpdate gameLogicUpdate;
+        if (validAnswer) {
+            gameLogicUpdate = goodAnswer();
         } else {
-            return badAnswer();
+            gameLogicUpdate = badAnswer();
         }
+        return new EquationCheckResult(validAnswer, gameLogicUpdate);
     }
 
-    protected abstract EquationCheckResult goodAnswer();
+    protected abstract GameLogicUpdate goodAnswer();
 
-    protected abstract EquationCheckResult badAnswer();
+    protected abstract GameLogicUpdate badAnswer();
 }

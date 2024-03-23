@@ -2,31 +2,19 @@ package com.platydev.calculmental.data.gamelogic;
 
 public class EquationCheckResult {
 
-    private final int scoreVariation;
-    private final int timeVariation;
-    private final boolean newEquationNeeded;
-    private final boolean endGame;
+    private final boolean goodAnswer;
+    private final GameLogicUpdate gameLogicUpdate;
 
-    public EquationCheckResult(int scoreVariation, int timeVariation, boolean newEquationNeeded, boolean endGame) {
-        this.scoreVariation = scoreVariation;
-        this.timeVariation = timeVariation;
-        this.newEquationNeeded = newEquationNeeded;
-        this.endGame = endGame;
+    public EquationCheckResult(boolean goodAnswer, GameLogicUpdate gameLogicUpdate) {
+        this.goodAnswer = goodAnswer;
+        this.gameLogicUpdate = gameLogicUpdate;
     }
 
-    public int getScoreVariation() {
-        return scoreVariation;
+    public boolean isGoodAnswer() {
+        return goodAnswer;
     }
 
-    public int getTimeVariation() {
-        return timeVariation;
-    }
-
-    public boolean isNewEquationNeeded() {
-        return newEquationNeeded;
-    }
-
-    public boolean isEndGame() {
-        return endGame;
+    public GameLogicUpdate getGameLogicUpdate() {
+        return gameLogicUpdate;
     }
 }

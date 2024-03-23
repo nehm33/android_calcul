@@ -7,12 +7,12 @@ public class CLMGameLogic extends GameLogic {
     }
 
     @Override
-    protected EquationCheckResult goodAnswer() {
-        return new EquationCheckResult(1, 0, true, false);
+    protected GameLogicUpdate goodAnswer() {
+        return new GameLogicUpdate(1, 0, true, false);
     }
 
     @Override
-    protected EquationCheckResult badAnswer() {
-        return new EquationCheckResult(0, 0, false, false);
+    protected GameLogicUpdate badAnswer() {
+        return new GameLogicUpdate(0, 0, false, false);
     }
 }

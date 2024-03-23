@@ -12,22 +12,22 @@ public class ZenGameLogic extends GameLogic {
     }
 
     @Override
-    protected EquationCheckResult goodAnswer() {
+    protected GameLogicUpdate goodAnswer() {
         nbEquationsPlayed++;
         if (nbEquationsPlayed == NB_EQUATIONS_TO_RESOLVE) {
-            return new EquationCheckResult(1, 0, false, true);
+            return new GameLogicUpdate(1, 0, false, true);
         } else {
-            return new EquationCheckResult(1, 0, true, false);
+            return new GameLogicUpdate(1, 0, true, false);
         }
     }
 
     @Override
-    protected EquationCheckResult badAnswer() {
+    protected GameLogicUpdate badAnswer() {
         nbEquationsPlayed++;
         if (nbEquationsPlayed == NB_EQUATIONS_TO_RESOLVE) {
-            return new EquationCheckResult(0, 0, false, true);
+            return new GameLogicUpdate(0, 0, false, true);
         } else {
-            return new EquationCheckResult(0, 0, true, false);
+            return new GameLogicUpdate(0, 0, true, false);
         }
     }
 }
