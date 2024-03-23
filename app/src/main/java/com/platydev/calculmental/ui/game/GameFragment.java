@@ -5,33 +5,28 @@ import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.platydev.calculmental.R;
 import com.platydev.calculmental.data.gamelogic.EquationCheckResult;
 import com.platydev.calculmental.data.gamelogic.GameLogicUpdate;
-import com.platydev.calculmental.data.operation.Operation;
 import com.platydev.calculmental.data.options.Options;
+import com.platydev.calculmental.data.utils.Utils;
 import com.platydev.calculmental.databinding.FragmentGameBinding;
 import com.platydev.calculmental.injection.datastore.OptionsDataStore;
 import com.platydev.calculmental.injection.datastore.factory.OptionsDataStoreFactory;
 import com.platydev.calculmental.ui.endgame.EndGameFragment;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,9 +35,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class GameFragment extends Fragment {
 
-    private static final  DateTimeFormatter MM_SS_TIME_FORMATTER = DateTimeFormatter.ofPattern("mm:ss");
-    private static final int HOUR_IN_SECONDS = 3600;
-    private static final int DAY_IN_SECONDS = 24*3600;
     private static final int END_PAUSE_DURATION = 3000;
     private static final int[] countDownSound = {R.raw.un, R.raw.deux, R.raw.trois};
 
@@ -62,7 +54,7 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
     }
 
     @Override
@@ -100,7 +92,7 @@ public class GameFragment extends Fragment {
         }
         MediaPlayer.create(getContext(), R.raw.fin).start();
         setComponentsDisabled();
-        new CountDownTimer(3000, 300) {
+        new CountDownTimer(END_PAUSE_DURATION, END_PAUSE_DURATION) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -111,7 +103,7 @@ public class GameFragment extends Fragment {
             public void onFinish() {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                EndGameFragment endGameFragment = EndGameFragment.newInstance();
+                EndGameFragment endGameFragment = EndGameFragment.newInstance(gameViewModel.score.getValue(), gameViewModel.getTimerTime());
                 fragmentTransaction.replace(R.id.container, endGameFragment);
                 fragmentTransaction.commit();
             }
@@ -151,7 +143,7 @@ public class GameFragment extends Fragment {
     private void initTimer() {
         if (gameViewModel.isTimerNeeded()) {
             long gameViewModelTimerTime = gameViewModel.getTimerTime();
-            binding.timerTextView.setText(format(gameViewModelTimerTime));
+            binding.timerTextView.setText(Utils.formatTime(gameViewModelTimerTime));
             long timerTime = gameViewModel.isTimelessTimer() ? Long.MAX_VALUE : gameViewModelTimerTime*1000;
             timer = new CountDownTimer(timerTime,1000) {
                 @Override
@@ -161,7 +153,7 @@ public class GameFragment extends Fragment {
                     } else {
                         gameViewModel.decrementTimerTime();
                     }
-                    binding.timerTextView.setText(format(gameViewModel.getTimerTime()));
+                    binding.timerTextView.setText(Utils.formatTime(gameViewModel.getTimerTime()));
                 }
 
                 @Override
@@ -174,24 +166,11 @@ public class GameFragment extends Fragment {
     }
 
     private void setObservers() {
-        gameViewModel.score.observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                binding.scoreTextView.setText("Score: "+integer);
-            }
-        });
-        gameViewModel.currentOperation.observe(getViewLifecycleOwner(), new Observer<Operation>() {
-            @Override
-            public void onChanged(Operation operation) {
-                binding.equationTextView.setText(operation.toString());
-            }
-        });
-        gameViewModel.isFinished.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    stopGame();
-                }
+        gameViewModel.score.observe(getViewLifecycleOwner(), integer -> binding.scoreTextView.setText("Score: "+integer));
+        gameViewModel.currentOperation.observe(getViewLifecycleOwner(), operation -> binding.equationTextView.setText(operation.toString()));
+        gameViewModel.isFinished.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
+                stopGame();
             }
         });
     }
@@ -207,25 +186,19 @@ public class GameFragment extends Fragment {
         binding.btn7.setOnClickListener(new ClavierClickListener(7));
         binding.btn8.setOnClickListener(new ClavierClickListener(8));
         binding.btn9.setOnClickListener(new ClavierClickListener(9));
-        binding.btnEnter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String resultText = binding.resultTextView.getText().toString();
-                if (!resultText.isEmpty()) {
-                    int result = Integer.parseInt(binding.resultTextView.getText().toString());
-                    checkEquation(result);
-                }
+        binding.btnEnter.setOnClickListener(v -> {
+            String resultText = binding.resultTextView.getText().toString();
+            if (!resultText.isEmpty()) {
+                int result = Integer.parseInt(binding.resultTextView.getText().toString());
+                checkEquation(result);
             }
         });
-        binding.btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String result = binding.resultTextView.getText().toString();
-                if (!result.isEmpty()) {
-                    StringBuilder newResult = new StringBuilder(result);
-                    newResult.deleteCharAt(newResult.length()-1);
-                    binding.resultTextView.setText(newResult.toString());
-                }
+        binding.btnReturn.setOnClickListener(v -> {
+            String result = binding.resultTextView.getText().toString();
+            if (!result.isEmpty()) {
+                StringBuilder newResult = new StringBuilder(result);
+                newResult.deleteCharAt(newResult.length()-1);
+                binding.resultTextView.setText(newResult.toString());
             }
         });
     }
@@ -244,18 +217,6 @@ public class GameFragment extends Fragment {
         binding.btn9.setEnabled(false);
         binding.btnReturn.setEnabled(false);
         binding.btnEnter.setEnabled(false);
-    }
-
-    private String format(long time) {
-        if (time < DAY_IN_SECONDS) {
-            LocalTime localTime = LocalTime.ofSecondOfDay(time);
-            DateTimeFormatter formatter = time < HOUR_IN_SECONDS ? MM_SS_TIME_FORMATTER : DateTimeFormatter.ISO_LOCAL_TIME;
-            return localTime.format(formatter);
-        } else {
-            long days = time / DAY_IN_SECONDS;
-            LocalTime localTime = LocalTime.ofSecondOfDay(time%DAY_IN_SECONDS);
-            return days + "j " + localTime.format(DateTimeFormatter.ISO_LOCAL_TIME);
-        }
     }
 
     private class ClavierClickListener implements View.OnClickListener {
@@ -301,11 +262,11 @@ public class GameFragment extends Fragment {
         }
     }
 
-    private class BonusAnimationListener implements Animator.AnimatorListener {
+    private static class BonusAnimationListener implements Animator.AnimatorListener {
 
-        private TextView textView;
-        private int variation;
-        private float initialY;
+        private final TextView textView;
+        private final int variation;
+        private final float initialY;
 
         public BonusAnimationListener(TextView textView, int variation) {
             this.textView = textView;
