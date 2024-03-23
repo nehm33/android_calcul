@@ -2,7 +2,7 @@ package com.platydev.calculmental.data.operation;
 
 public class Operation {
 	
-	private Operateur op;
+	private final Operateur op;
 	private int opGauche;
 	private int opDroite;
 	

@@ -26,7 +26,7 @@ public class ArcadeGameLogic extends GameLogic {
         nbAttempt++;
         if (nbAttempt == NB_ATTEMPT_PER_EQUATION) {
             nbAttempt = 0;
-            return new EquationCheckResult(0, 0, true, false);
+            return new EquationCheckResult(SCORE_MALUS_FACTOR*NB_ATTEMPT_PER_EQUATION, 0, true, false);
         } else {
             return new EquationCheckResult(SCORE_MALUS_FACTOR*nbAttempt, 0, false, false);
         }

@@ -7,7 +7,7 @@ public enum Mode {
 	Infini("Infini"),
 	Arcade("Arcade");
 	
-	private String nom; 
+	private final String nom;
 	
 	Mode(String nom) {
 		this.nom = nom;

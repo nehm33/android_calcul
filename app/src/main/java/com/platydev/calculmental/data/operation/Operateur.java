@@ -1,5 +1,7 @@
 package com.platydev.calculmental.data.operation;
 
+import androidx.annotation.NonNull;
+
 public enum Operateur {
 	
 	PLUS('+', 0.35, 1),
@@ -7,9 +9,9 @@ public enum Operateur {
 	MULT('x', 0.23, 3),
 	DIV('/', 0.17, 4);
 	
-	private char op;
-	private double prob;
-	private int difficulte;
+	private final char op;
+	private final double prob;
+	private final int difficulte;
 	
 	Operateur(char op, double prob, int difficulte) {
 		this.op = op;
@@ -39,7 +41,9 @@ public enum Operateur {
 				return -1;
 		}
 	}
-	
+
+	@NonNull
+	@Override
 	public String toString() {
 		return ""+this.op;
 	}
