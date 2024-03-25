@@ -73,6 +73,9 @@ public class EndGameFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getParentFragmentManager();
+                for (int i=0; i<fragmentManager.getBackStackEntryCount(); i++) {
+                    fragmentManager.popBackStack();
+                }
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 WelcomeFragment welcomeFragment = WelcomeFragment.newInstance();
                 fragmentTransaction.replace(R.id.container, welcomeFragment);
