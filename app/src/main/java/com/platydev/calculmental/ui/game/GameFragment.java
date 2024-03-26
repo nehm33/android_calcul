@@ -26,7 +26,6 @@ import com.platydev.calculmental.data.utils.Utils;
 import com.platydev.calculmental.databinding.FragmentGameBinding;
 import com.platydev.calculmental.injection.datastore.OptionsDataStore;
 import com.platydev.calculmental.injection.datastore.factory.OptionsDataStoreFactory;
-import com.platydev.calculmental.ui.endgame.EndGameFragment;
 
 /**
  * A simple {@link Fragment} subclass.

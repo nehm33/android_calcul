@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.platydev.calculmental.R;
-import com.platydev.calculmental.data.operation.Mode;
+import com.platydev.calculmental.data.options.Mode;
 import com.platydev.calculmental.data.options.Options;
 import com.platydev.calculmental.databinding.FragmentOptionsBinding;
 import com.platydev.calculmental.injection.datastore.OptionsDataStore;

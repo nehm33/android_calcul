@@ -11,7 +11,7 @@ import com.platydev.calculmental.data.gamelogic.GameLogic;
 import com.platydev.calculmental.data.gamelogic.InfiniGameLogic;
 import com.platydev.calculmental.data.gamelogic.ZenGameLogic;
 import com.platydev.calculmental.data.operation.GenAleatoireOperation;
-import com.platydev.calculmental.data.operation.Mode;
+import com.platydev.calculmental.data.options.Mode;
 import com.platydev.calculmental.data.operation.Operation;
 import com.platydev.calculmental.data.options.Options;
 

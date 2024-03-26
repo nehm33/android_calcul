@@ -1,4 +1,4 @@
-package com.platydev.calculmental.ui.endgame;
+package com.platydev.calculmental.ui.game;
 
 import android.os.Bundle;
 

@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.preferences.core.PreferencesKeys;
 import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
 
-import com.platydev.calculmental.data.operation.Mode;
+import com.platydev.calculmental.data.options.Mode;
 import com.platydev.calculmental.data.options.Options;
 
 import io.reactivex.rxjava3.core.Single;

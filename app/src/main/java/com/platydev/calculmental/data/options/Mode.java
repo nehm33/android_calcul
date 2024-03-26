@@ -1,4 +1,4 @@
-package com.platydev.calculmental.data.operation;
+package com.platydev.calculmental.data.options;
 
 public enum Mode {
 	
