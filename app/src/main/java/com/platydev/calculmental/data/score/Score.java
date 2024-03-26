@@ -1,15 +1,20 @@
 package com.platydev.calculmental.data.score;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Score {
+@Entity(tableName = "scores")
+public class Score implements Comparable<Score> {
 	
 	private String pseudo;
 	private int score;
 	private int niveau;
-	private int temps;
+	private long temps;
 	private String mode;
+	@PrimaryKey
 	private LocalDateTime date;
 	
 	public Score() {
@@ -49,7 +54,7 @@ public class Score {
 		this.niveau = niveau;
 	}
 
-	public int getTemps() {
+	public long getTemps() {
 		return temps;
 	}
 
@@ -79,5 +84,16 @@ public class Score {
 	
 	public String getDateString() {
 		return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	}
+
+	@Override
+	public int compareTo(Score o) {
+		if (o == null) return 1;
+		if (niveau != o.getNiveau()) return Integer.compare(niveau, o.getNiveau());
+		if (mode.compareTo(o.getMode()) != 0) return mode.compareTo(o.getMode());
+		if (score != o.getScore()) return Integer.compare(score, o.getScore());
+		if (temps != o.getTemps()) return -Long.compare(temps, o.getTemps());
+		if (!date.equals(o.getDate())) return date.compareTo(o.getDate());
+		return pseudo.compareTo(o.getPseudo());
 	}
 }

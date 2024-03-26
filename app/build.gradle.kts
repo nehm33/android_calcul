@@ -55,6 +55,10 @@ dependencies {
 
     // optional - RxJava3 support
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
+
+    implementation("androidx.room:room-runtime:2.3.0")
+
+    annotationProcessor("androidx.room:room-compiler:2.3.0")
 }
 
 // Alternatively - use the following artifact without an Android dependency.
