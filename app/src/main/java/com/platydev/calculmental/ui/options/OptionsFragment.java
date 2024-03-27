@@ -80,10 +80,10 @@ public class OptionsFragment extends Fragment {
 
         selectRadioButton(options.getMode()).setChecked(true);
 
-        binding.zenButton.setOnClickListener(new TimeModeClickListener(false));
-        binding.clmButton.setOnClickListener(new TimeModeClickListener(true));
-        binding.infiniButton.setOnClickListener(new TimeModeClickListener(false));
-        binding.arcadeButton.setOnClickListener(new TimeModeClickListener(true));
+        binding.zenButton.setOnClickListener(new TimeModeClickListener(Mode.Zen));
+        binding.clmButton.setOnClickListener(new TimeModeClickListener(Mode.CLM));
+        binding.infiniButton.setOnClickListener(new TimeModeClickListener(Mode.Infini));
+        binding.arcadeButton.setOnClickListener(new TimeModeClickListener(Mode.Arcade));
 
         binding.timeSeekBar.setMin(Options.TEMPS_MIN/Options.TEMPS_PAS);
         binding.timeSeekBar.setMax(Options.TEMPS_MAX/Options.TEMPS_PAS);
@@ -150,15 +150,15 @@ public class OptionsFragment extends Fragment {
 
     private class TimeModeClickListener implements View.OnClickListener {
 
-        private final boolean isTimeMode;
+        private final boolean isTimeLimitedMode;
 
-        public TimeModeClickListener(boolean isTimeMode) {
-            this.isTimeMode = isTimeMode;
+        public TimeModeClickListener(Mode mode) {
+            this.isTimeLimitedMode = mode.isTimeLimitedMode();
         }
 
         @Override
         public void onClick(View v) {
-            setTimeSeekBarEnabled(isTimeMode);
+            setTimeSeekBarEnabled(isTimeLimitedMode);
         }
     }
 }
