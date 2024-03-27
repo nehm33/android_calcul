@@ -15,6 +15,7 @@ import com.platydev.calculmental.R;
 import com.platydev.calculmental.databinding.FragmentWelcomeBinding;
 import com.platydev.calculmental.ui.game.GameFragment;
 import com.platydev.calculmental.ui.options.OptionsFragment;
+import com.platydev.calculmental.ui.scores.ScoreParametersFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +67,17 @@ public class WelcomeFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 OptionsFragment optionsFragment = OptionsFragment.newInstance();
                 fragmentTransaction.add(R.id.container, optionsFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+        binding.scoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ScoreParametersFragment scoreParametersFragment = ScoreParametersFragment.newInstance();
+                fragmentTransaction.add(R.id.container, scoreParametersFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
