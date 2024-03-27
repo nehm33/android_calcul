@@ -31,4 +31,5 @@
     <string name="votre_score">Votre score:</string>
     <string name="votre_temps">Votre temps:</string>
     <string name="accueil">Accueil</string>
+    <string name="filtrer">Filtrer</string>
 </resources>
