@@ -1,6 +1,8 @@
 package com.platydev.calculmental.data.options;
 
-public class Options {
+import java.io.Serializable;
+
+public class Options implements Serializable {
 
     public static final int NIVEAU_MIN = 1;
     public static final int NIVEAU_MAX = 20;
