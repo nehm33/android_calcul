@@ -1,10 +1,12 @@
 package com.platydev.calculmental.data.score;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.platydev.calculmental.data.utils.Utils;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity(tableName = "scores")
 public class Score implements Comparable<Score> {
@@ -15,19 +17,20 @@ public class Score implements Comparable<Score> {
 	private long temps;
 	private String mode;
 	@PrimaryKey
-	private LocalDateTime date;
+	@NonNull
+	private String date;
 	
 	public Score() {
 		
 	}
 
-	public Score(String pseudo, int score, int niveau, int temps, String mode) {
+	public Score(String pseudo, int score, int niveau, long temps, String mode) {
 		this.pseudo = pseudo;
 		this.score = score;
 		this.niveau = niveau;
 		this.temps = temps;
 		this.mode = mode;
-		this.date = LocalDateTime.now();
+		this.date = LocalDateTime.now().format(Utils.STANDARD_DATE_TIME_FORMATTER);
 	}
 
 	public String getPseudo() {
@@ -54,14 +57,6 @@ public class Score implements Comparable<Score> {
 		this.niveau = niveau;
 	}
 
-	public long getTemps() {
-		return temps;
-	}
-
-	public void setTemps(int temps) {
-		this.temps = temps;
-	}
-
 	public String getMode() {
 		return mode;
 	}
@@ -70,20 +65,21 @@ public class Score implements Comparable<Score> {
 		this.mode = mode;
 	}
 
-	public LocalDateTime getDate() {
+	public void setTemps(long temps) {
+		this.temps = temps;
+	}
+
+	public long getTemps() {
+		return temps;
+	}
+
+	@NonNull
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(@NonNull String date) {
 		this.date = date;
-	}
-	
-	public String getTempsString() {
-		return temps/60  + " : " + temps%60;
-	}
-	
-	public String getDateString() {
-		return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	}
 
 	@Override
@@ -93,7 +89,7 @@ public class Score implements Comparable<Score> {
 		if (mode.compareTo(o.getMode()) != 0) return mode.compareTo(o.getMode());
 		if (score != o.getScore()) return Integer.compare(score, o.getScore());
 		if (temps != o.getTemps()) return -Long.compare(temps, o.getTemps());
-		if (!date.equals(o.getDate())) return date.compareTo(o.getDate());
+		if (!date.equals(o.getDate())) return -LocalDateTime.parse(date, Utils.STANDARD_DATE_TIME_FORMATTER).compareTo(LocalDateTime.parse(o.getDate(), Utils.STANDARD_DATE_TIME_FORMATTER));
 		return pseudo.compareTo(o.getPseudo());
 	}
 }

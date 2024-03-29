@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Utils {
 
     public static final  DateTimeFormatter MM_SS_TIME_FORMATTER = DateTimeFormatter.ofPattern("mm:ss");
+    public static final DateTimeFormatter STANDARD_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     public static final int HOUR_IN_SECONDS = 3600;
     public static final int DAY_IN_SECONDS = 24*3600;
 
