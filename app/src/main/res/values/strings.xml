@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CalculMental</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="jouer">Jouer</string>
     <string name="options">Options</string>
@@ -32,4 +31,9 @@
     <string name="votre_temps">Votre temps:</string>
     <string name="accueil">Accueil</string>
     <string name="filtrer">Filtrer</string>
+    <string name="enregistrer">Enregistrer</string>
+    <string name="felicitations">Félicitations</string>
+    <string name="nouveau_meilleur_score">Nouveau Meilleur Score</string>
+    <string name="quel_est_votre_nom">Quel est votre nom?</string>
+    <string name="entrez_votre_nom">Entrez votre nom</string>
 </resources>
