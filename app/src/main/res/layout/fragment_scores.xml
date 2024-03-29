@@ -14,4 +14,13 @@
         android:id="@+id/table"
         android:background="@color/white" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/errorTextView"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
 </LinearLayout>
