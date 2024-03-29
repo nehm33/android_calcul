@@ -26,6 +26,7 @@ import com.platydev.calculmental.data.utils.Utils;
 import com.platydev.calculmental.databinding.FragmentGameBinding;
 import com.platydev.calculmental.injection.datastore.OptionsDataStore;
 import com.platydev.calculmental.injection.datastore.factory.OptionsDataStoreFactory;
+import com.platydev.calculmental.ui.pause.PauseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +74,16 @@ public class GameFragment extends Fragment {
         setComponentsListener();
         setObservers();
         initTimer();
+        gameViewModel.setPaused(false);
         launchCountDownAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!gameViewModel.isFinished.getValue()) {
+            pause();
+        }
     }
 
     public void startGame() {
@@ -199,6 +209,24 @@ public class GameFragment extends Fragment {
                 binding.resultTextView.setText(newResult.toString());
             }
         });
+        binding.pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pause();
+            }
+        });
+    }
+
+    private void pause() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        gameViewModel.setPaused(true);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PauseFragment pauseFragment = PauseFragment.newInstance();
+        fragmentTransaction.replace(R.id.container, pauseFragment);
+        fragmentTransaction.commit();
     }
 
     private void setComponentsDisabled() {
@@ -239,7 +267,7 @@ public class GameFragment extends Fragment {
         @Override
         public void onAnimationStart(@NonNull Animator animation) {
             MediaPlayer.create(getContext(), countDownSound[numberToDisplay-1]).start();
-            binding.waitTextView.setText(""+numberToDisplay);
+            binding.waitTextView.setText(String.valueOf(numberToDisplay));
         }
 
         @Override
@@ -256,7 +284,7 @@ public class GameFragment extends Fragment {
         public void onAnimationRepeat(@NonNull Animator animation) {
             numberToDisplay--;
             MediaPlayer.create(getContext(), countDownSound[numberToDisplay-1]).start();
-            binding.waitTextView.setText(""+numberToDisplay);
+            binding.waitTextView.setText(String.valueOf(numberToDisplay));
         }
     }
 
@@ -279,7 +307,7 @@ public class GameFragment extends Fragment {
                 textView.setText("+"+variation);
             } else {
                 textView.setTextColor(Color.RED);
-                textView.setText(""+variation);
+                textView.setText(String.valueOf(variation));
             }
         }
 

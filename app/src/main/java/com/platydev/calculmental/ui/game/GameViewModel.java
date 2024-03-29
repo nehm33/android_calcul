@@ -33,6 +33,7 @@ public class GameViewModel extends ViewModel {
     private boolean timerNeeded = true;
     private boolean timelessTimer = false;
     private boolean chronometer = false;
+    private boolean paused = false;
     private GameLogic logic;
     private Options options;
     private Score newHighScore;
@@ -58,32 +59,34 @@ public class GameViewModel extends ViewModel {
     }
 
     public void init(Options options) {
-        this.options = options;
-        newHighScore = null;
-        oldHighScore = null;
+        if (!paused) {
+            this.options = options;
+            newHighScore = null;
+            oldHighScore = null;
 
-        currentOperation.postValue(getNewEquation());
-        score.postValue(0);
-        isHighScore.postValue(false);
+            currentOperation.postValue(getNewEquation());
+            score.postValue(0);
+            isHighScore.postValue(false);
 
-        Mode mode = options.getMode();
-        switch (mode) {
-            case CLM:
-                setParameters(false, false,true, options.getTemps());
-                logic = new CLMGameLogic(options.getNiveau());
-                break;
-            case Infini:
-                setParameters(true, true, true, 0);
-                logic = new InfiniGameLogic(options.getNiveau());
-                break;
-            case Arcade:
-                setParameters(false, true, true, options.getTemps());
-                logic = new ArcadeGameLogic(options.getNiveau());
-                break;
-            default:
-                setParameters(false, false, false, 0);
-                logic = new ZenGameLogic(options.getNiveau());
-                break;
+            Mode mode = options.getMode();
+            switch (mode) {
+                case CLM:
+                    setParameters(false, false,true, options.getTemps());
+                    logic = new CLMGameLogic(options.getNiveau());
+                    break;
+                case Infini:
+                    setParameters(true, true, true, 0);
+                    logic = new InfiniGameLogic(options.getNiveau());
+                    break;
+                case Arcade:
+                    setParameters(false, true, true, options.getTemps());
+                    logic = new ArcadeGameLogic(options.getNiveau());
+                    break;
+                default:
+                    setParameters(false, false, false, 0);
+                    logic = new ZenGameLogic(options.getNiveau());
+                    break;
+            }
         }
     }
 
@@ -101,6 +104,14 @@ public class GameViewModel extends ViewModel {
 
     public boolean isTimelessTimer() {
         return timelessTimer;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public void incrementTimerTime() {
