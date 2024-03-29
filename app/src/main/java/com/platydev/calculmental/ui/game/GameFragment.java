@@ -53,7 +53,7 @@ public class GameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
     }
 
     @Override
@@ -79,7 +79,6 @@ public class GameFragment extends Fragment {
     public void startGame() {
         binding.waitTextView.setVisibility(View.INVISIBLE);
         binding.gameLayout.setVisibility(View.VISIBLE);
-        gameViewModel.startGame();
         if (timer != null) {
             timer.start();
         }
@@ -102,7 +101,7 @@ public class GameFragment extends Fragment {
             public void onFinish() {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                EndGameFragment endGameFragment = EndGameFragment.newInstance(gameViewModel.score.getValue(), gameViewModel.getTimerTime());
+                EndGameFragment endGameFragment = EndGameFragment.newInstance();
                 fragmentTransaction.replace(R.id.container, endGameFragment);
                 fragmentTransaction.commit();
             }

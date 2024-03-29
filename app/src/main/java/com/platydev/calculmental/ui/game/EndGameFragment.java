@@ -1,5 +1,7 @@
 package com.platydev.calculmental.ui.game;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,14 +9,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.platydev.calculmental.R;
+import com.platydev.calculmental.data.options.Options;
+import com.platydev.calculmental.data.score.Score;
 import com.platydev.calculmental.data.utils.Utils;
 import com.platydev.calculmental.databinding.FragmentEndGameBinding;
+import com.platydev.calculmental.db.ScoreDatabase;
 import com.platydev.calculmental.ui.welcome.WelcomeFragment;
 
 /**
@@ -24,33 +32,22 @@ import com.platydev.calculmental.ui.welcome.WelcomeFragment;
  */
 public class EndGameFragment extends Fragment {
 
-    private static final String SCORE_PARAM = "score";
-    private static final String TIME_PARAM = "time";
-
     private FragmentEndGameBinding binding;
-    private int score;
-    private long time;
+    private GameViewModel gameViewModel;
 
     public EndGameFragment() {
         // Required empty public constructor
     }
 
-    public static EndGameFragment newInstance(int score, long time) {
-        EndGameFragment endGameFragment = new EndGameFragment();
-        Bundle args = new Bundle();
-        args.putInt(SCORE_PARAM, score);
-        args.putLong(TIME_PARAM, time);
-        endGameFragment.setArguments(args);
-        return endGameFragment;
+    public static EndGameFragment newInstance() {
+        return new EndGameFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            score = getArguments().getInt(SCORE_PARAM);
-            time = getArguments().getLong(TIME_PARAM);
-        }
+        gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+        gameViewModel.reset();
     }
 
     @Override
@@ -63,9 +60,9 @@ public class EndGameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.finalScoreTextView.setText(""+score);
-        if (time > 0) {
-            binding.finalTimeTextView.setText(Utils.formatTime(time));
+        binding.finalScoreTextView.setText(String.valueOf(gameViewModel.score.getValue()));
+        if (gameViewModel.getTimerTime() > 0) {
+            binding.finalTimeTextView.setText(Utils.formatTime(gameViewModel.getTimerTime()));
         } else {
             binding.yourTimeTextView.setVisibility(View.INVISIBLE);
         }
@@ -82,5 +79,33 @@ public class EndGameFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        //displayResultDialog();
+    }
+
+    private void displayResultDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Bravo! Vous êtes dans le top 10.");
+        builder.setMessage("Votre score est "+ gameViewModel.score.getValue()+".\nEntrez votre pseudo (15 caractères max).");
+
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                String pseudo = input.getText().toString().trim();
+                if (!pseudo.isEmpty() && pseudo.length() <= 15) {
+                    Score scoreObj = new Score(pseudo, gameViewModel.score.getValue(),
+                            gameViewModel.getOptions().getNiveau(),
+                            gameViewModel.getTimerTime() != 0 ? gameViewModel.getTimerTime() : gameViewModel.getOptions().getTemps(),
+                            gameViewModel.getOptions().getMode().getNom());
+                    ScoreDatabase.getInstance(getContext()).scoreDAO().insertScore(scoreObj);
+                    dialog.cancel();
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
