@@ -36,11 +36,14 @@ import com.platydev.calculmental.ui.pause.PauseFragment;
 public class GameFragment extends Fragment {
 
     private static final int END_PAUSE_DURATION = 3000;
-    private static final int[] countDownSound = {R.raw.un, R.raw.deux, R.raw.trois};
 
     private FragmentGameBinding binding;
     private GameViewModel gameViewModel;
     private CountDownTimer timer;
+    private MediaPlayer goodAnswerSound;
+    private MediaPlayer badAnswerSound;
+    private MediaPlayer endSound;
+    private MediaPlayer[] countDownSound;
 
     public GameFragment() {
         // Required empty public constructor
@@ -55,6 +58,11 @@ public class GameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+        goodAnswerSound = MediaPlayer.create(getContext(), R.raw.vrai);
+        badAnswerSound = MediaPlayer.create(getContext(), R.raw.faux);
+        endSound = MediaPlayer.create(getContext(), R.raw.fin);
+        countDownSound = new MediaPlayer[] {MediaPlayer.create(getContext(), R.raw.un),
+                MediaPlayer.create(getContext(), R.raw.deux), MediaPlayer.create(getContext(), R.raw.trois)};
     }
 
     @Override
@@ -89,6 +97,9 @@ public class GameFragment extends Fragment {
     public void startGame() {
         binding.waitTextView.setVisibility(View.INVISIBLE);
         binding.gameLayout.setVisibility(View.VISIBLE);
+        for (MediaPlayer mediaPlayer : countDownSound) {
+            mediaPlayer.reset();
+        }
         if (timer != null) {
             timer.start();
         }
@@ -98,7 +109,7 @@ public class GameFragment extends Fragment {
         if (timer != null) {
             timer.cancel();
         }
-        MediaPlayer.create(getContext(), R.raw.fin).start();
+        endSound.start();
         setComponentsDisabled();
         new CountDownTimer(END_PAUSE_DURATION, END_PAUSE_DURATION) {
 
@@ -123,9 +134,13 @@ public class GameFragment extends Fragment {
         GameLogicUpdate gameLogicUpdate = equationCheckResult.getGameLogicUpdate();
         binding.resultTextView.setText("");
         if (equationCheckResult.isGoodAnswer()) {
-            MediaPlayer.create(getContext(), R.raw.vrai).start();
+            goodAnswerSound.reset();
+            goodAnswerSound = MediaPlayer.create(getContext(), R.raw.vrai);
+            goodAnswerSound.start();
         } else {
-            MediaPlayer.create(getContext(), R.raw.faux).start();
+            badAnswerSound.reset();
+            badAnswerSound = MediaPlayer.create(getContext(), R.raw.faux);
+            badAnswerSound.start();
         }
         launchBonusVariationAnimation(binding.bonusScoreTextView, gameLogicUpdate.getScoreVariation());
         launchBonusVariationAnimation(binding.bonusTimeTextView, gameLogicUpdate.getTimeVariation());
@@ -266,7 +281,7 @@ public class GameFragment extends Fragment {
         private int numberToDisplay = 3;
         @Override
         public void onAnimationStart(@NonNull Animator animation) {
-            MediaPlayer.create(getContext(), countDownSound[numberToDisplay-1]).start();
+            countDownSound[numberToDisplay-1].start();
             binding.waitTextView.setText(String.valueOf(numberToDisplay));
         }
 
@@ -283,7 +298,7 @@ public class GameFragment extends Fragment {
         @Override
         public void onAnimationRepeat(@NonNull Animator animation) {
             numberToDisplay--;
-            MediaPlayer.create(getContext(), countDownSound[numberToDisplay-1]).start();
+            countDownSound[numberToDisplay-1].start();
             binding.waitTextView.setText(String.valueOf(numberToDisplay));
         }
     }
