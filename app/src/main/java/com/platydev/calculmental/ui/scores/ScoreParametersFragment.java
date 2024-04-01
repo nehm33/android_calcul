@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 
 import com.platydev.calculmental.R;
@@ -79,7 +80,7 @@ public class ScoreParametersFragment extends Fragment {
             }
         });
 
-        binding.clmButton.setChecked(true);
+        selectRadioButton().setChecked(true);
 
         binding.clmButton.setOnClickListener(new ScoreParametersFragment.TimeModeClickListener(Mode.CLM));
         binding.infiniButton.setOnClickListener(new ScoreParametersFragment.TimeModeClickListener(Mode.Infini));
@@ -117,6 +118,19 @@ public class ScoreParametersFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+    }
+
+    private RadioButton selectRadioButton() {
+        Mode mode = options.getMode();
+        switch (mode) {
+            case CLM:
+                return binding.clmButton;
+            case Infini:
+                setTimeSeekBarEnabled(false);
+                return binding.infiniButton;
+            default:
+                return binding.arcadeButton;
+        }
     }
 
     private void setTimeSeekBarEnabled(boolean enabled) {
