@@ -58,8 +58,6 @@ public class GameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameViewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
-        goodAnswerSound = MediaPlayer.create(getContext(), R.raw.vrai);
-        badAnswerSound = MediaPlayer.create(getContext(), R.raw.faux);
         endSound = MediaPlayer.create(getContext(), R.raw.fin);
         countDownSound = new MediaPlayer[] {MediaPlayer.create(getContext(), R.raw.un),
                 MediaPlayer.create(getContext(), R.raw.deux), MediaPlayer.create(getContext(), R.raw.trois)};
@@ -134,11 +132,11 @@ public class GameFragment extends Fragment {
         GameLogicUpdate gameLogicUpdate = equationCheckResult.getGameLogicUpdate();
         binding.resultTextView.setText("");
         if (equationCheckResult.isGoodAnswer()) {
-            goodAnswerSound.reset();
+            if (goodAnswerSound != null) goodAnswerSound.reset();
             goodAnswerSound = MediaPlayer.create(getContext(), R.raw.vrai);
             goodAnswerSound.start();
         } else {
-            badAnswerSound.reset();
+            if (badAnswerSound != null) badAnswerSound.reset();
             badAnswerSound = MediaPlayer.create(getContext(), R.raw.faux);
             badAnswerSound.start();
         }
