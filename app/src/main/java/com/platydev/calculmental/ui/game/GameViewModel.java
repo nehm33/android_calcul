@@ -51,7 +51,7 @@ public class GameViewModel extends ViewModel {
         isFinished.postValue(gameLogicUpdate.isEndGame());
         score.postValue(score.getValue()+ gameLogicUpdate.getScoreVariation());
         timerTime += gameLogicUpdate.getTimeVariation();
-        if (timerTime <= 0) {
+        if (timerNeeded && timerTime <= 0) {
             timerTime = 0;
             if (!chronometer) isFinished.postValue(true);
         }
