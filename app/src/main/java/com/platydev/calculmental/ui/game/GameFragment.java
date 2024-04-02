@@ -106,6 +106,9 @@ public class GameFragment extends Fragment {
     private void stopGame() {
         if (timer != null) {
             timer.cancel();
+            if (!gameViewModel.isChronometer()) {
+                binding.timerTextView.setText(Utils.formatTime(gameViewModel.getTimerTime()));
+            }
         }
         endSound.start();
         setComponentsDisabled();
@@ -179,7 +182,7 @@ public class GameFragment extends Fragment {
 
                 @Override
                 public void onFinish() {
-                    binding.timerTextView.setText("00:00");
+                    if (!gameViewModel.isChronometer()) binding.timerTextView.setText("00:00");
                     gameViewModel.decrementTimerTime();
                 }
             };

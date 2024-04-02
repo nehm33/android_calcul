@@ -6,8 +6,7 @@ public class ZenGameLogic extends GameLogic {
 
     private int nbEquationsPlayed;
 
-    public ZenGameLogic(int niveau) {
-        super(niveau);
+    public ZenGameLogic() {
         this.nbEquationsPlayed = 0;
     }
 

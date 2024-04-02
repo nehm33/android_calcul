@@ -51,6 +51,10 @@ public class GameViewModel extends ViewModel {
         isFinished.postValue(gameLogicUpdate.isEndGame());
         score.postValue(score.getValue()+ gameLogicUpdate.getScoreVariation());
         timerTime += gameLogicUpdate.getTimeVariation();
+        if (timerTime <= 0) {
+            timerTime = 0;
+            if (!chronometer) isFinished.postValue(true);
+        }
         return equationCheckResult;
     }
 
@@ -72,19 +76,19 @@ public class GameViewModel extends ViewModel {
             switch (mode) {
                 case CLM:
                     setParameters(false, false,true, options.getTemps());
-                    logic = new CLMGameLogic(options.getNiveau());
+                    logic = new CLMGameLogic();
                     break;
                 case Infini:
                     setParameters(true, true, true, 0);
-                    logic = new InfiniGameLogic(options.getNiveau());
+                    logic = new InfiniGameLogic();
                     break;
                 case Arcade:
                     setParameters(false, true, true, options.getTemps());
-                    logic = new ArcadeGameLogic(options.getNiveau());
+                    logic = new ArcadeGameLogic();
                     break;
                 default:
                     setParameters(false, false, false, 0);
-                    logic = new ZenGameLogic(options.getNiveau());
+                    logic = new ZenGameLogic();
                     break;
             }
         }

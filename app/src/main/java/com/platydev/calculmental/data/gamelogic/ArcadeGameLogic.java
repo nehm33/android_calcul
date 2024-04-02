@@ -3,14 +3,15 @@ package com.platydev.calculmental.data.gamelogic;
 public class ArcadeGameLogic extends GameLogic {
 
     private static final int NB_ATTEMPT_PER_EQUATION = 3;
-    private static final int SCORE_BONUS_FACTOR = 5;
-    private static final int TIME_BONUS_FACTOR = 2;
-    private static final int SCORE_MALUS_FACTOR = -3;
+    private static final int SCORE_BONUS_FACTOR = 10;
+    private static final int TIME_BONUS_FACTOR = 1;
+    private static final int SCORE_MALUS_FACTOR = -2;
+    private static final int TIME_MALUS_FACTOR = -1;
+    private static final int DIFFICULTE_MAX = 4;
 
     private int nbAttempt;
 
-    public ArcadeGameLogic(int niveau) {
-        super(niveau);
+    public ArcadeGameLogic() {
         nbAttempt = 0;
     }
 
@@ -24,11 +25,12 @@ public class ArcadeGameLogic extends GameLogic {
     @Override
     protected GameLogicUpdate badAnswer() {
         nbAttempt++;
+        int difficulte = currentOperation.getOp().getDifficulte();
         if (nbAttempt == NB_ATTEMPT_PER_EQUATION) {
             nbAttempt = 0;
-            return new GameLogicUpdate(SCORE_MALUS_FACTOR*NB_ATTEMPT_PER_EQUATION, 0, true, false);
+            return new GameLogicUpdate(SCORE_MALUS_FACTOR*(DIFFICULTE_MAX-difficulte+1), TIME_MALUS_FACTOR*(DIFFICULTE_MAX-difficulte+1), true, false);
         } else {
-            return new GameLogicUpdate(SCORE_MALUS_FACTOR*nbAttempt, 0, false, false);
+            return new GameLogicUpdate(SCORE_MALUS_FACTOR*(DIFFICULTE_MAX-difficulte+1), TIME_MALUS_FACTOR*(DIFFICULTE_MAX-difficulte+1), false, false);
         }
     }
 }
